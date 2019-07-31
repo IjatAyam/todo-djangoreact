@@ -15,6 +15,7 @@ class App extends Component {
       },
       todoList: []
     }
+    this.itemCategory = this.itemCategory.bind(this)
   }
 
   componentDidMount() {
@@ -124,65 +125,49 @@ class App extends Component {
     this.setState({ activeItem: item, modal: !this.state.modal })
   }
 
-  render() {
+  itemCategory() {
     if (this.state.viewCompleted === "all") {
       return (
-        <main className="content">
-          <h1 className="text-white text-uppercase text-center my-4">Todo app</h1>
-          <div className="row">
-            <div className="col-md-6 col-sm-10 mx-auto p-0">
-              <div className="card p-3">
-                <div className="">
-                  <button onClick={this.createItem} className="btn btn-primary">
-                    Add task
-                  </button>
-                </div>
-                {this.renderTablList()}
-                <ul className="list-group list-group-flush">
-                  {this.renderItems(false)}
-                  {this.renderItems(true)}
-                </ul>
-              </div>
-            </div>
-          </div>
-          {this.state.modal ? (
-            <Modal
-              activeItem={this.state.activeItem}
-              toggle={this.toggle}
-              onSave={this.handleSubmit}
-            />
-          ) : null}
-        </main >
+        <div>
+          {this.renderItems(false)}
+          {this.renderItems(true)}
+        </div>
       )
     }
     return (
-      <main className="content">
-        <h1 className="text-white text-uppercase text-center my-4">Todo app</h1>
-        <div className="row">
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="card p-3">
-              <div className="">
-                <button onClick={this.createItem} className="btn btn-primary">
-                  Add task
-                </button>
-              </div>
-              {this.renderTablList()}
-              <ul className="list-group list-group-flush">
-                {this.state.viewCompleted ? this.renderItems(true) : this.renderItems(false)}
-              </ul>
-            </div>
-          </div>
-        </div>
-        {this.state.modal ? (
-          <Modal
-            activeItem={this.state.activeItem}
-            toggle={this.toggle}
-            onSave={this.handleSubmit}
-          />
-        ) : null}
-      </main >
+      <div>
+        {this.state.viewCompleted ? this.renderItems(true) : this.renderItems(false)}
+      </div>
     )
   }
+
+  render = () => (
+    <main className="content">
+      <h1 className="text-white text-uppercase text-center my-4">Todo app</h1>
+      <div className="row">
+        <div className="col-md-6 col-sm-10 mx-auto p-0">
+          <div className="card p-3">
+            <div className="">
+              <button onClick={this.createItem} className="btn btn-primary">
+                Add task
+              </button>
+            </div>
+            {this.renderTablList()}
+            <ul className="list-group list-group-flush">
+              <this.itemCategory />
+            </ul>
+          </div>
+        </div>
+      </div>
+      {this.state.modal ? (
+        <Modal
+          activeItem={this.state.activeItem}
+          toggle={this.toggle}
+          onSave={this.handleSubmit}
+        />
+      ) : null}
+    </main >
+  )
 }
 
 export default App
